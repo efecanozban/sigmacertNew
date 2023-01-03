@@ -1,0 +1,25 @@
+body{
+    min-height: 100vh;
+    background: rgb(255, 181, 181);
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+table{
+    overflow-y:scroll;
+    overflow-x: scroll;
+    height: 350px;
+    width: 100%;
+    display:block;
+    border: 2px solid black;
+    line-height: 1.4em;
+}
+
+th{
+    padding: 2px 12px;
+}
+
+tr:nth-child(even){
+    background: rgba(0, 0, 0, 0.1);
+}
