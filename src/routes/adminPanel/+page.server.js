@@ -31,7 +31,7 @@ export const actions = {
             'P', 
             (select id from personel where 
                  isim = '${data.get("isim")}' and
-                soyisim = '${data.get("soyisim")}'
+                soyisim = 'vs'
                 ))`
         await db.getQuerry(querry);
     }

@@ -11,7 +11,11 @@
 	let showDeleteGorusmeModal = false;
 </script>
 
-<NewGorusmeMoodle bind:showModal={showNewGorusmeModal} />
+<NewGorusmeMoodle
+	bind:showModal={showNewGorusmeModal}
+	gorusmeDurumları={data.gorusmeDurumları}
+	gorusmeKanalları={data.gorusmeKanalları}
+/>
 <UpdateGorusmeMoodle bind:showModal={showUpdateGorusmeModal} />
 
 <div class="appointmentTable">

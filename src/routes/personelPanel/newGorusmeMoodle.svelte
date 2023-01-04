@@ -1,60 +1,99 @@
 <script>
-    import Moodle from '$lib/moodle.svelte'
+	import Moodle from '$lib/moodle.svelte';
+	import { fileContent } from '$lib/store.js';
 
-    export let showModal = false;
-    const newGoursmeButtonClick = () => {
-        showModal = !showModal;
-    }
+	export let showModal = false;
+	export let gorusmeKanalları;
+	export let gorusmeDurumları;
+	const newGoursmeButtonClick = () => {
+		showModal = !showModal;
+	};
+
+	function readFileContent(e) {
+		var file = e.target.files[0];
+		var reader = new FileReader();
+		reader.readAsText(file, 'UTF-8');
+
+		reader.onload = (readerEvent) => {
+			var content = readerEvent.target.result;
+
+			let newFileContent;
+			fileContent.subscribe((value) => {
+				newFileContent = value;
+			});
+			fileContent.set(content);
+
+			console.log(newFileContent);
+		};
+	}
 </script>
 
-
 <div>
-    <Moodle {showModal} on:click= {newGoursmeButtonClick}>
-        <form id = "newUserForm">
-            <p>Yeni Görüşme Kaydı Oluştur</p>
-            <input type="text" placeholder="Görüşülen Firma"> <br>
-            <select name=""></select><br>
-            <select name=""></select><br>
-            <input type="text" placeholder="Verilen Teklif"> <br>
-            <p>dosya yükle</p>
-            <input type="text" placeholder="Görüşülen Teklili"> <br>
-            <input type="text" placeholder="Yetkili Telefon"> <br>
-            <input type="text" placeholder="Yetkili E-mail"> <br>
-            <input type="text" placeholder="Açıklamalar"> <br>
-    
-            <button>Kullanıcı Oluştur</button>
-        </form>
-    </Moodle>
+	<Moodle {showModal} on:click={newGoursmeButtonClick}>
+		<form id="newUserForm" action="/personelPanel" method="POST">
+			<p>Yeni Görüşme Kaydı Oluştur</p>
+			<label for="gorusulenFirma">Görüşülen Firma</label> <br />
+			<input type="text" name="gorusulenFirma" /> <br />
+
+			Görüşme Kanalı <br /><select name="gorusmeKanalı">
+				{#each gorusmeDurumları as gorusmeDurumu}
+					<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
+				{/each}
+			</select><br />
+
+			Görüşme Durumu <br /><select name="gorusmeDurumu">
+				{#each gorusmeKanalları as gorusmeKanalı}
+					<option value={gorusmeKanalı.id}>{gorusmeKanalı.isim}</option>
+				{/each}
+			</select><br />
+
+			<label for="verilenTeklif">Verilen Teklif</label><br />
+			<input type="text" name="verilenTeklif" /> <br />
+
+			<input type="file" name="file" on:change={readFileContent} /> <br />
+
+			<label for="gorusulenYetkili">Görüşülen Yetkili</label><br />
+			<input type="text" name="gorusulenYetkili" /> <br />
+
+			<label for="yetkiliTelefon">Yetkili Telefon</label><br />
+			<input type="text" name="yetkiliTelefon" /> <br />
+
+			<label for="yetkiliEMail">Yetkili E-Mail</label><br />
+			<input type="text" name="yetkiliEMail" /> <br />
+
+			<label for="aciklamalar">Açıklamalar</label><br />
+			<input type="text" name="aciklamalar" /> <br />
+
+			<button>Kullanıcı Oluştur</button>
+		</form>
+	</Moodle>
 </div>
 
-
-
 <style>
-    #newUserForm{
-        position: relative;
-        height: 60vh;
-        top: 40%;
-        transform: translateY(-50%);
-        display: block;
-        background-color: rgb(255, 255, 255);
-        border-radius: 5%;
-    }
+	#newUserForm {
+		position: relative;
+		height: 60vh;
+		top: 40%;
+		transform: translateY(-50%);
+		display: block;
+		background-color: rgb(255, 255, 255);
+		border-radius: 5%;
+	}
 
-    #newUserForm p{
-        position: relative;
-        top: 10px;
-        text-align: center;
-        font-size: 1.4em;
-    }
+	#newUserForm p {
+		position: relative;
+		top: 10px;
+		text-align: center;
+		font-size: 1.4em;
+	}
 
+	#newUserForm input {
+		margin: 10px 20px;
+	}
 
-    #newUserForm input{
-        margin:10px 20px;
-    }
-
-    #newUserForm button{
-        position:absolute;
-        bottom: 20px;
-        right: 30px;
-    }
+	#newUserForm button {
+		position: absolute;
+		bottom: 20px;
+		right: 30px;
+	}
 </style>

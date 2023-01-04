@@ -24,7 +24,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each data.querry as row}
+		{#each data.gorusmeler as row}
 			<tr>
 				<td>{row.firma}</td>
 				<td>{`${row.tarih.getDate()} / ${row.tarih.getMonth()} / ${row.tarih.getFullYear()}`}</td>
