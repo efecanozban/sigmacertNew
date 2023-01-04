@@ -9,6 +9,8 @@
 	let showNewGorusmeModal = false;
 	let showUpdateGorusmeModal = false;
 	let showDeleteGorusmeModal = false;
+
+	let selectedPersonel;
 </script>
 
 <NewGorusmeMoodle
@@ -16,17 +18,33 @@
 	gorusmeDurumları={data.gorusmeDurumları}
 	gorusmeKanalları={data.gorusmeKanalları}
 />
-<UpdateGorusmeMoodle bind:showModal={showUpdateGorusmeModal} />
+<UpdateGorusmeMoodle
+	bind:showModal={showUpdateGorusmeModal}
+	gorusmeDurumları={data.gorusmeDurumları}
+	gorusmeKanalları={data.gorusmeKanalları}
+	{selectedPersonel}
+/>
 
 <div class="appointmentTable">
-	<Table {data} />
+	<Table {data} bind:selectedPersonel />
 </div>
 
 <div class="appointmentsTableButtons">
+	<form
+		id="deleteButtonForm"
+		action="/personelPanel?/deleteGorusme"
+		method="POST"
+		style="display:none"
+	>
+		<input type="text" name="selectedRow" bind:value={selectedPersonel} />
+	</form>
+
 	<button
 		class="appointmentsTableButton"
 		on:click={() => {
 			showDeleteGorusmeModal = true;
+			var deleteForm = document.getElementById('deleteButtonForm');
+			deleteForm.submit();
 		}}>Görüşmeyi Sil</button
 	>
 	<button

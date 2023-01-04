@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/private'
 import * as db from '$lib/server/database';
-import { userID, fileContent } from '$lib/store.js'
+import { userID } from '$lib/store.js'
 
 let userId;
 userID.subscribe(value => {
@@ -19,20 +19,47 @@ export async function load() {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    default: async ({ request }) => {
-        let newFileContent;
+    newGorusme: async ({ request }) => {
         const data = await request.formData()
         const querry = `call insert_gorusme(
             ${userId}, 
             '${data.get("gorusulenFirma")}',
             ${data.get("gorusmeKanalı")}, 
             ${data.get("gorusmeDurumu")}, 
-            ${newFileContent}, 
+            'data:image/png;base64,${data.get("icerik")}', 
             '${data.get("gorusulenYetkili")}',
             '${data.get("yetkiliTelefon")}',
             '${data.get("yetkiliEMail")}',
             '${data.get("verilenTeklif")}',
             '${data.get("aciklamalar")}')`
-        console.log(newFileContent)
+        db.getQuerry(querry)
+    },
+
+    deleteGorusme: async ({ request }) => {
+        const data = await request.formData()
+        const querry = `delete from gorusmeler where id = ${data.get("selectedRow")}`
+        db.getQuerry(querry)
+    },
+
+    updateGorusme: async ({ request }) => {
+        const data = await request.formData()
+
+        if (data.get("selectedRow") !== 'undefined') {
+            const querry = ` call update_gorusme(
+            ${userId}, 
+            '${data.get("gorusulenFirma")}',
+            ${data.get("gorusmeKanalı")}, 
+            ${data.get("gorusmeDurumu")}, 
+            'data:image/png;base64,${data.get("icerik")}', 
+            '${data.get("gorusulenYetkili")}',
+            '${data.get("yetkiliTelefon")}',
+            '${data.get("yetkiliEMail")}',
+            '${data.get("verilenTeklif")}',
+            '${data.get("aciklamalar")}',
+            ${data.get("selectedRow")}
+        )`
+            console.log(querry)
+            db.getQuerry(querry)
+        }
     }
 };

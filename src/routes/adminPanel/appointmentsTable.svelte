@@ -34,7 +34,7 @@
 				<td>{row.yetkili_telefon}</td>
 				<td>{row.yetkili_email}</td>
 				<td>{row.verilen_teklif}</td>
-				<img src={row.icerik} alt="icerik" />
+				<img src={row.icerik} alt="icerik yok" />
 				<td>{row.aciklamalar}</td>
 			</tr>
 		{/each}
@@ -66,10 +66,5 @@
 	img {
 		width: 100%;
 		height: auto;
-	}
-
-	img:hover {
-		width: inherit;
-		height: inherit;
 	}
 </style>

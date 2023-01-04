@@ -1,36 +1,30 @@
 <script>
 	import Moodle from '$lib/moodle.svelte';
-	import { fileContent } from '$lib/store.js';
 
 	export let showModal = false;
 	export let gorusmeKanalları;
 	export let gorusmeDurumları;
+
 	const newGoursmeButtonClick = () => {
 		showModal = !showModal;
 	};
 
+	let fileContent;
+
 	function readFileContent(e) {
 		var file = e.target.files[0];
 		var reader = new FileReader();
-		reader.readAsText(file, 'UTF-8');
+		reader.readAsBinaryString(file);
 
 		reader.onload = (readerEvent) => {
-			var content = readerEvent.target.result;
-
-			let newFileContent;
-			fileContent.subscribe((value) => {
-				newFileContent = value;
-			});
-			fileContent.set(content);
-
-			console.log(newFileContent);
+			fileContent = btoa(readerEvent.target.result);
 		};
 	}
 </script>
 
 <div>
 	<Moodle {showModal} on:click={newGoursmeButtonClick}>
-		<form id="newUserForm" action="/personelPanel" method="POST">
+		<form id="newUserForm" action="/personelPanel?/newGorusme" method="POST">
 			<p>Yeni Görüşme Kaydı Oluştur</p>
 			<label for="gorusulenFirma">Görüşülen Firma</label> <br />
 			<input type="text" name="gorusulenFirma" /> <br />
@@ -64,7 +58,9 @@
 			<label for="aciklamalar">Açıklamalar</label><br />
 			<input type="text" name="aciklamalar" /> <br />
 
-			<button>Kullanıcı Oluştur</button>
+			<input type="text" name="icerik" value={fileContent} style="display: none;" /> <br />
+
+			<button>Görüşme Kaydı Oluştur</button>
 		</form>
 	</Moodle>
 </div>
