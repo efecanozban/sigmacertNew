@@ -1,21 +1,73 @@
+:root {
+    --color: rgb(190, 150, 190);
+    --color-R: 190;
+    --color-G: 150;
+    --color-B: 190;
+}
+
+html {
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    overflow-x: hidden;
+}
+
+textarea {
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
 body {
     min-height: 100vh;
-    background: rgb(255, 181, 181);
+    background-color: rgb(190, 150, 190);
     margin: 0px;
     padding: 0px;
-
 }
 
 table {
-    overflow-y: scroll;
-    overflow-x: scroll;
-    height: 350px;
-    width: 100%;
+    overflow: scroll;
     display: block;
-    border: 2px solid black;
-    line-height: 1.4em;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+table::-webkit-scrollbar {
+    display: none;
 }
 
 th {
-    padding: 2px 12px;
+    text-align: left;
+    padding-left: 12px;
+}
+
+td {
+    padding-left: 12px;
+
+}
+
+button,
+input {
+    font-size: 16px;
+
+}
+
+button,
+input,
+label,
+p,
+select,
+h3 {
+    color: rgb(65, 65, 65);
+
+}
+
+
+button:active {
+    box-shadow: inset var(--active-shadow-distance) var(--active-shadow-distance) var(--active-shadow-blur) rgb(calc(var(--color-R) - var(--active-shadow-intesity)),
+            calc(var(--color-G) - var(--active-shadow-intesity)),
+            calc(var(--color-B) - var(--active-shadow-intesity))),
+        inset calc(var(--active-shadow-distance) * -1) calc(var(--active-shadow-distance) * -1) var(--active-shadow-blur) rgb(calc(var(--color-R) + var(--active-shadow-intesity)),
+            calc(var(--color-G) + var(--active-shadow-intesity)),
+            calc(var(--color-B) + var(--active-shadow-intesity))) !important;
+}
+
+.selected {
+    background-color: rgba(0, 0, 0, 0.25);
 }

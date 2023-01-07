@@ -32,7 +32,7 @@ export const actions = {
             '${data.get("yetkiliEMail")}',
             '${data.get("verilenTeklif")}',
             '${data.get("aciklamalar")}')`
-        db.getQuerry(querry)
+        db.getQuerry(querry);
     },
 
     deleteGorusme: async ({ request }) => {
@@ -45,20 +45,38 @@ export const actions = {
         const data = await request.formData()
 
         if (data.get("selectedRow") !== 'undefined') {
-            const querry = ` call update_gorusme(
-            ${userId}, 
-            '${data.get("gorusulenFirma")}',
-            ${data.get("gorusmeKanalı")}, 
-            ${data.get("gorusmeDurumu")}, 
-            'data:image/png;base64,${data.get("icerik")}', 
-            '${data.get("gorusulenYetkili")}',
-            '${data.get("yetkiliTelefon")}',
-            '${data.get("yetkiliEMail")}',
-            '${data.get("verilenTeklif")}',
-            '${data.get("aciklamalar")}',
-            ${data.get("selectedRow")}
-        )`
-            console.log(querry)
+            let querry;
+            if (data.get("icerik") !== 'undefined') {
+                querry = ` call update_gorusme(
+                    ${userId}, 
+                    '${data.get("gorusulenFirma")}',
+                    ${data.get("gorusmeKanalı")}, 
+                    ${data.get("gorusmeDurumu")}, 
+                    'data:image/png;base64,${data.get("icerik")}', 
+                    '${data.get("gorusulenYetkili")}',
+                    '${data.get("yetkiliTelefon")}',
+                    '${data.get("yetkiliEMail")}',
+                    '${data.get("verilenTeklif")}',
+                    '${data.get("aciklamalar")}',
+                    ${data.get("selectedRow")}
+                )`
+            }
+
+            else {
+                querry = ` call update_gorusme(
+                    ${userId}, 
+                    '${data.get("gorusulenFirma")}',
+                    ${data.get("gorusmeKanalı")}, 
+                    ${data.get("gorusmeDurumu")}, 
+                    '${data.get("gorusulenYetkili")}',
+                    '${data.get("yetkiliTelefon")}',
+                    '${data.get("yetkiliEMail")}',
+                    '${data.get("verilenTeklif")}',
+                    '${data.get("aciklamalar")}',
+                    ${data.get("selectedRow")}
+                )`
+            }
+
             db.getQuerry(querry)
         }
     }

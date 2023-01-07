@@ -25,40 +25,44 @@
 <div>
 	<Moodle {showModal} on:click={newGoursmeButtonClick}>
 		<form id="newUserForm" action="/personelPanel?/newGorusme" method="POST">
-			<p>Yeni Görüşme Kaydı Oluştur</p>
-			<label for="gorusulenFirma">Görüşülen Firma</label> <br />
+			<h3>Yeni Görüşme Kaydı Oluştur</h3>
+
+			<label for="gorusulenFirma">Görüşülen Firma</label>
 			<input type="text" name="gorusulenFirma" /> <br />
 
-			Görüşme Kanalı <br /><select name="gorusmeKanalı">
+			<label>Görüşme Kanalı</label>
+			<select name="gorusmeKanalı">
 				{#each gorusmeDurumları as gorusmeDurumu}
 					<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
 				{/each}
 			</select><br />
 
-			Görüşme Durumu <br /><select name="gorusmeDurumu">
+			<label>Görüşme Durumu</label>
+			<select name="gorusmeDurumu">
 				{#each gorusmeKanalları as gorusmeKanalı}
 					<option value={gorusmeKanalı.id}>{gorusmeKanalı.isim}</option>
 				{/each}
 			</select><br />
 
-			<label for="verilenTeklif">Verilen Teklif</label><br />
+			<label for="verilenTeklif">Verilen Teklif</label>
 			<input type="text" name="verilenTeklif" /> <br />
 
+			<label for="file">Dosya</label>
 			<input type="file" name="file" on:change={readFileContent} /> <br />
 
-			<label for="gorusulenYetkili">Görüşülen Yetkili</label><br />
+			<label for="gorusulenYetkili">Görüşülen Yetkili</label>
 			<input type="text" name="gorusulenYetkili" /> <br />
 
-			<label for="yetkiliTelefon">Yetkili Telefon</label><br />
+			<label for="yetkiliTelefon">Yetkili Telefon</label>
 			<input type="text" name="yetkiliTelefon" /> <br />
 
-			<label for="yetkiliEMail">Yetkili E-Mail</label><br />
+			<label for="yetkiliEMail">Yetkili E-Mail</label>
 			<input type="text" name="yetkiliEMail" /> <br />
 
-			<label for="aciklamalar">Açıklamalar</label><br />
-			<input type="text" name="aciklamalar" /> <br />
+			<label for="aciklamalar">Açıklamalar</label>
+			<textarea type="text" name="aciklamalar" /> <br />
 
-			<input type="text" name="icerik" value={fileContent} style="display: none;" /> <br />
+			<input type="text" name="icerik" value={fileContent} style="display: none;" />
 
 			<button>Görüşme Kaydı Oluştur</button>
 		</form>
@@ -66,30 +70,83 @@
 </div>
 
 <style>
+	:root {
+		--newGorusmeInput-shadow-distance: 2px;
+		--newGorusmeInput-shadow-blur: 6px;
+		--newGorusmeInput-shadow-intesity: 50;
+
+		--newGorusmeButton-shadow-distance: 2px;
+		--newGorusmeButton-shadow-blur: 6px;
+		--newGorusmeButton-shadow-intesity: 50;
+	}
+
 	#newUserForm {
 		position: relative;
-		height: 60vh;
-		top: 40%;
+		height: 80vh;
+		width: 50vw;
+		top: 40vh;
 		transform: translateY(-50%);
-		display: block;
 		background-color: rgb(255, 255, 255);
 		border-radius: 5%;
-	}
-
-	#newUserForm p {
-		position: relative;
-		top: 10px;
+		display: grid;
+		grid-template-rows: 10% 5% 5% 5% 5% 5% 5% 5% 5% 10% auto;
+		grid-template-columns: 25% 60% auto;
+		grid-gap: 3%;
 		text-align: center;
-		font-size: 1.4em;
+		background-color: var(--color);
 	}
 
-	#newUserForm input {
-		margin: 10px 20px;
+	h3 {
+		grid-column-start: 1;
+		grid-column-end: 4;
+	}
+
+	#newUserForm input:not(:nth-child(15)),
+	select,
+	textarea {
+		padding-left: 4%;
+		border: none;
+		border-radius: 12px;
+		background-color: var(--color);
+
+		box-shadow: inset var(--newGorusmeInput-shadow-distance) var(--newGorusmeInput-shadow-distance)
+				var(--newGorusmeInput-shadow-blur)
+				rgb(
+					calc(var(--color-R) - var(--newGorusmeInput-shadow-intesity)),
+					calc(var(--color-G) - var(--newGorusmeInput-shadow-intesity)),
+					calc(var(--color-B) - var(--newGorusmeInput-shadow-intesity))
+				),
+			inset calc(var(--newGorusmeInput-shadow-distance) * -1)
+				calc(var(--newGorusmeInput-shadow-distance) * -1) var(--newGorusmeInput-shadow-blur)
+				rgb(
+					calc(var(--color-R) + var(--newGorusmeInput-shadow-intesity)),
+					calc(var(--color-G) + var(--newGorusmeInput-shadow-intesity)),
+					calc(var(--color-B) + var(--newGorusmeInput-shadow-intesity))
+				);
 	}
 
 	#newUserForm button {
 		position: absolute;
-		bottom: 20px;
-		right: 30px;
+		bottom: 3vh;
+		right: 2vw;
+		width: 20vw;
+		border: none;
+		border-radius: 12px;
+		background-color: var(--color);
+
+		box-shadow: var(--newGorusmeButton-shadow-distance) var(--newGorusmeButton-shadow-distance)
+				var(--newGorusmeButton-shadow-blur)
+				rgb(
+					calc(var(--color-R) - var(--newGorusmeButton-shadow-intesity)),
+					calc(var(--color-G) - var(--newGorusmeButton-shadow-intesity)),
+					calc(var(--color-B) - var(--newGorusmeButton-shadow-intesity))
+				),
+			calc(var(--newGorusmeButton-shadow-distance) * -1)
+				calc(var(--newGorusmeButton-shadow-distance) * -1) var(--newGorusmeButton-shadow-blur)
+				rgb(
+					calc(var(--color-R) + var(--newGorusmeButton-shadow-intesity)),
+					calc(var(--color-G) + var(--newGorusmeButton-shadow-intesity)),
+					calc(var(--color-B) + var(--newGorusmeButton-shadow-intesity))
+				);
 	}
 </style>

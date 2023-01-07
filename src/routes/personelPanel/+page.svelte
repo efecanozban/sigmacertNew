@@ -13,22 +13,6 @@
 	let selectedPersonel;
 </script>
 
-<NewGorusmeMoodle
-	bind:showModal={showNewGorusmeModal}
-	gorusmeDurumları={data.gorusmeDurumları}
-	gorusmeKanalları={data.gorusmeKanalları}
-/>
-<UpdateGorusmeMoodle
-	bind:showModal={showUpdateGorusmeModal}
-	gorusmeDurumları={data.gorusmeDurumları}
-	gorusmeKanalları={data.gorusmeKanalları}
-	{selectedPersonel}
-/>
-
-<div class="appointmentTable">
-	<Table {data} bind:selectedPersonel />
-</div>
-
 <div class="appointmentsTableButtons">
 	<form
 		id="deleteButtonForm"
@@ -61,23 +45,56 @@
 	>
 </div>
 
+<NewGorusmeMoodle
+	bind:showModal={showNewGorusmeModal}
+	gorusmeDurumları={data.gorusmeDurumları}
+	gorusmeKanalları={data.gorusmeKanalları}
+/>
+<UpdateGorusmeMoodle
+	bind:showModal={showUpdateGorusmeModal}
+	gorusmeDurumları={data.gorusmeDurumları}
+	gorusmeKanalları={data.gorusmeKanalları}
+	{selectedPersonel}
+/>
+
+<Table {data} bind:selectedPersonel />
+
 <style>
-	.appointmentTable {
-		margin-top: 3%;
-		display: flex;
-		justify-content: center;
-		height: 70vh;
+	:root {
+		--appointmentsTableButton-shadow-distance: 3px;
+		--appointmentsTableButton-shadow-blur: 6px;
+		--appointmentsTableButton-shadow-intesity: 50;
 	}
 
 	.appointmentsTableButtons {
 		display: flex;
 		justify-content: center;
-		margin-top: 2%;
+		margin: 6vh;
 	}
 
 	.appointmentsTableButton {
-		height: 30px;
-		width: 300px;
-		margin: auto 20px;
+		height: 3ch;
+		width: 20vw;
+		margin: auto 2vw;
+		font-weight: 600;
+
+		border: none;
+		border-radius: 12px;
+		background: var(--color);
+		box-shadow: var(--appointmentsTableButton-shadow-distance)
+				var(--appointmentsTableButton-shadow-distance) var(--appointmentsTableButton-shadow-blur)
+				rgb(
+					calc(var(--color-R) - var(--appointmentsTableButton-shadow-intesity)),
+					calc(var(--color-G) - var(--appointmentsTableButton-shadow-intesity)),
+					calc(var(--color-B) - var(--appointmentsTableButton-shadow-intesity))
+				),
+			calc(var(--appointmentsTableButton-shadow-distance) * -1)
+				calc(var(--appointmentsTableButton-shadow-distance) * -1)
+				var(--appointmentsTableButton-shadow-blur)
+				rgb(
+					calc(var(--color-R) + var(--appointmentsTableButton-shadow-intesity)),
+					calc(var(--color-G) + var(--appointmentsTableButton-shadow-intesity)),
+					calc(var(--color-B) + var(--appointmentsTableButton-shadow-intesity))
+				);
 	}
 </style>

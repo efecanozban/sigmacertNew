@@ -13,30 +13,21 @@
 
 <NewUserMoodle />
 
-<div class="appointmentTableDiv">
-	<AppointmentTable data={data.appointments} />
-</div>
-
 <div class="statisticsDiv">
 	<StatisticsTable data={data.statistics} bind:selectedPersonel bind:appointmentPercentages />
 	<Piechart data={data.statistics} bind:appointmentPercentages />
 	<StatisticsChart data={data.statistics_status} bind:selectedPersonel />
 </div>
 
+<AppointmentTable data={data.appointments} />
+
 <style>
-	.appointmentTableDiv {
-		margin-top: 2vh;
-		display: flex;
-		justify-content: center;
-		margin-bottom: 30px;
-	}
 	.statisticsDiv {
 		display: grid;
-		width: 80%;
-		margin-left: auto;
-		margin-right: auto;
-		grid-template-columns: 25% 49% 22%;
+		width: 80vw;
+		margin: auto;
+		grid-template-columns: 25% 42% 28%;
 		grid-template-rows: 100%;
-		grid-gap: 2%;
+		grid-gap: 2.5%;
 	}
 </style>
