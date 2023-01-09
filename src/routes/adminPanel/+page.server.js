@@ -1,11 +1,11 @@
-import { env } from '$env/dynamic/private'
+import { SECRET_PERSONEL_TABLE_QUERRY, SECRET_PERSONEL_STATISTICS_QUERRY, SECRET_PERSONEL_STATISTICS_ALL_QUERRY } from '$env/static/private'
 import * as db from '$lib/server/database';
 
 export async function load() {
     return {
-        appointments: await db.getQuerry(env.PERSONEL_TABLE_QUERRY),
-        statistics: await db.getQuerry(env.PERSONEL_STATISTICS_QUERRY),
-        statistics_status: await db.getQuerry(env.PERSONEL_STATISTICS_ALL_QUERRY)
+        appointments: await db.getQuerry(SECRET_PERSONEL_TABLE_QUERRY),
+        statistics: await db.getQuerry(SECRET_PERSONEL_STATISTICS_QUERRY),
+        statistics_status: await db.getQuerry(SECRET_PERSONEL_STATISTICS_ALL_QUERRY)
     }
 }
 

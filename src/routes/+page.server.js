@@ -1,9 +1,9 @@
-import { env } from '$env/dynamic/private'
+import { SECRET_USERS_QUERRY } from '$env/static/private'
 import * as db from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
 import { userID } from '$lib/store.js'
 
-const users = await db.getQuerry(env.USERS_QUERRY)
+const users = await db.getQuerry(SECRET_USERS_QUERRY)
 
 
 /** @type {import('./$types').Actions} */

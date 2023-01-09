@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/private'
+import { SECRET_PERSONEL_TABLE_QUERRY, SECRET_GORUSME_KANALI_QUERRY, SECRET_GORUSME_DURUMU_QUERRY } from '$env/static/private'
 import * as db from '$lib/server/database';
 import { userID } from '$lib/store.js'
 
@@ -10,9 +10,9 @@ userID.subscribe(value => {
 
 export async function load() {
     return {
-        gorusmeler: await db.getQuerry(env.PERSONEL_TABLE_QUERRY),
-        gorusmeKanalları: await db.getQuerry(env.GORUSME_KANALI_QUERRY),
-        gorusmeDurumları: await db.getQuerry(env.GORUSME_DURUMU_QUERRY)
+        gorusmeler: await db.getQuerry(SECRET_PERSONEL_TABLE_QUERRY),
+        gorusmeKanalları: await db.getQuerry(SECRET_GORUSME_KANALI_QUERRY),
+        gorusmeDurumları: await db.getQuerry(SECRET_GORUSME_DURUMU_QUERRY)
     }
 }
 
