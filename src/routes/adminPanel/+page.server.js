@@ -1,7 +1,19 @@
 import { SECRET_PERSONEL_TABLE_QUERRY, SECRET_PERSONEL_STATISTICS_QUERRY, SECRET_PERSONEL_STATISTICS_ALL_QUERRY } from '$env/static/private'
 import * as db from '$lib/server/database';
+import { logedIn } from '$lib/store.js'
+import { redirect } from '@sveltejs/kit';
+
+let logedin;
+logedIn.subscribe(value => {
+    logedin = value;
+});
+
 
 export async function load() {
+    if (logedin != "m") {
+        throw redirect(303, '/')
+    }
+
     return {
         appointments: await db.getQuerry(SECRET_PERSONEL_TABLE_QUERRY),
         statistics: await db.getQuerry(SECRET_PERSONEL_STATISTICS_QUERRY),

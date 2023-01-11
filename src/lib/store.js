@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const userID = writable("");
+export const logedIn = writable(0);
 export const panelName = writable("");
 export const gorusulenFirma = writable("");
 export const gorusme_Kanali = writable("");
