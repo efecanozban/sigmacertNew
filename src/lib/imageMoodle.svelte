@@ -21,7 +21,4 @@
 		max-height: 40px;
 		width: auto;
 	}
-
-	image {
-	}
 </style>

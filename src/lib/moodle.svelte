@@ -11,8 +11,8 @@
 
 <style>
 	.backDrop {
-		width: 90vw;
-		height: 90vh;
+		width: 100vw;
+		height: 100vh;
 		position: fixed;
 		top: 0;
 		left: 0;
