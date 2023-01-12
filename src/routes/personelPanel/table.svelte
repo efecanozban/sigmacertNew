@@ -27,7 +27,7 @@
 				yetkiliTelefon.set(row.childNodes[12].innerHTML);
 				yetkiliEmail.set(row.childNodes[14].innerHTML);
 				verilenTeklif.set(row.childNodes[16].innerHTML);
-				aciklamalar.set(row.childNodes[24].innerHTML);
+				aciklamalar.set(row.childNodes[22].innerHTML);
 
 				if (row.classList.contains('selected')) {
 					row.classList.remove('selected');
