@@ -8,7 +8,6 @@
 
 	let showNewGorusmeModal = false;
 	let showUpdateGorusmeModal = false;
-	let showDeleteGorusmeModal = false;
 
 	let selectedPersonel;
 </script>
@@ -26,7 +25,6 @@
 	<button
 		class="appointmentsTableButton"
 		on:click={() => {
-			showDeleteGorusmeModal = true;
 			var deleteForm = document.getElementById('deleteButtonForm');
 			deleteForm.submit();
 		}}>Görüşmeyi Sil</button

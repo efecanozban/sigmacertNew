@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	export let data;
 	export let selectedPersonel;
+	export let selectedPersonelId;
 	const tableHeadings = ['Personel', 'Toplam Görüşme Sayısı', 'Görüşme Oranı (%)'];
 
 	export let appointmentPercentages;
@@ -21,6 +22,7 @@
 		document.querySelectorAll('.statisticsTableRow').forEach(function (row) {
 			row.addEventListener('click', function () {
 				selectedPersonel = row.id;
+				selectedPersonelId = row.childNodes[6].id;
 
 				if (row.classList.contains('selected')) {
 					row.classList.remove('selected');
@@ -50,6 +52,7 @@
 				<td class="staticsTableCell">{row._personel}</td>
 				<td class="staticsTableCell">{row._count}</td>
 				<td class="staticsTableCell">{appointmentPercentages[i]}</td>
+				<td style="display: none;" id={row._personel_id} />
 			</tr>
 		{/each}
 	</tbody>

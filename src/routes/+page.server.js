@@ -3,13 +3,12 @@ import * as db from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
 import { userID, logedIn } from '$lib/store.js'
 
-const users = await db.getQuerry(SECRET_USERS_QUERRY)
-
-
+var users;
 
 /** @type {import('./$types').Actions} */
 export const actions = {
     default: async ({ request }) => {
+        users = await db.getQuerry(SECRET_USERS_QUERRY)
         const data = await request.formData()
         checkUser(data)
     }

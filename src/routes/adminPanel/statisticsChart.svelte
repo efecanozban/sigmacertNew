@@ -26,7 +26,6 @@
 	#title {
 		grid-column-start: 1;
 		grid-column-end: 3;
-		font-size: 1rem;
 		text-align: center;
 	}
 
@@ -38,7 +37,6 @@
 
 	p {
 		white-space: nowrap;
-		font-size: 1vw;
 	}
 
 	.bold {

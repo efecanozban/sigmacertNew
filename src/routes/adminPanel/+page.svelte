@@ -8,13 +8,19 @@
 	panelName.set('Yönetici Paneli');
 	export let data;
 	let selectedPersonel = 0;
+	let selectedPersonelId = '';
 	let appointmentPercentages = [];
 </script>
 
-<NewUserMoodle />
+<NewUserMoodle bind:selectedPersonelId />
 
 <div class="statisticsDiv">
-	<StatisticsTable data={data.statistics} bind:selectedPersonel bind:appointmentPercentages />
+	<StatisticsTable
+		data={data.statistics}
+		bind:selectedPersonel
+		bind:appointmentPercentages
+		bind:selectedPersonelId
+	/>
 	<Piechart data={data.statistics} bind:appointmentPercentages />
 	<StatisticsChart data={data.statistics_status} bind:selectedPersonel />
 </div>
@@ -26,8 +32,7 @@
 		display: grid;
 		width: 80vw;
 		margin: auto;
-		grid-template-columns: 25% 42% 28%;
-		grid-template-rows: 100%;
-		grid-gap: 2.5%;
+		grid-template-columns: 330px 4fr 360px;
+		grid-gap: 1vw;
 	}
 </style>

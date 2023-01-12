@@ -23,9 +23,8 @@ export async function load() {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    default: async ({ request }) => {
+    addUser: async ({ request }) => {
         const data = await request.formData()
-        console.log(data.get("sifre"))
         const querry = `insert into personel (isim, soyisim, telefon, e_mail)
         values(
             '${data.get("isim")}',
@@ -45,6 +44,16 @@ export const actions = {
                  isim = '${data.get("isim")}' and
                 soyisim = '${data.get("soyisim")}'
                 ))`
+
+        await db.getQuerry(querry);
+    },
+
+    deleteUser: async ({ request }) => {
+        const data = await request.formData()
+        const querry =
+            `delete from users where personel_id = ${data.get('selectedPersonel')};
+            delete from  personel where id = ${data.get('selectedPersonel')};
+        `
         await db.getQuerry(querry);
     }
 };

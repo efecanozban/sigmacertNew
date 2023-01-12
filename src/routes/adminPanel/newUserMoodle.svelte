@@ -1,20 +1,32 @@
 <script>
 	import Moodle from '$lib/moodle.svelte';
+	export let selectedPersonelId;
 
 	let showNewUserModal = false;
+
 	const newUserButtonClick = () => {
 		showNewUserModal = !showNewUserModal;
 	};
 </script>
 
 <div class="newUser">
+	<form id="deleteUserForm" action="/adminPanel?/deleteUser" method="POST" style="display:none">
+		<input type="text" name="selectedPersonel" bind:value={selectedPersonelId} />
+	</form>
+
+	<button
+		id="deleteUserButton"
+		on:click={() => {
+			let deleteForm = document.getElementById('deleteUserForm');
+			deleteForm.submit();
+		}}>Kullanıcı Sil</button
+	>
+
 	<button id="newUserButton" on:click={newUserButtonClick}>Yeni Kullanıcı Oluştur</button>
 
 	<Moodle showModal={showNewUserModal} on:click={newUserButtonClick}>
-		<form id="newUserForm" method="POST" action="/adminPanel">
-			<br />
+		<form id="newUserForm" method="POST" action="/adminPanel?/addUser">
 			<h3>Yeni Kullanıcı Oluştur</h3>
-			<br />
 
 			<label for="isim">İsim </label>
 			<input type="text" name="isim" /><br />
@@ -60,9 +72,10 @@
 		justify-content: right;
 	}
 
+	#deleteUserButton,
 	#newUserButton {
 		width: 15vw;
-		margin: 4vh 3vw 4vh auto;
+		margin: 4vh 3vw 4vh -1vw;
 		border: none;
 		border-radius: 12px;
 		background-color: var(--color);
@@ -84,9 +97,9 @@
 	}
 
 	#newUserForm {
-		height: 60%;
+		height: 60vh;
 		margin: auto;
-		width: 50%;
+		width: 50vw;
 		position: relative;
 		top: 30%;
 		transform: translateY(-50%);
@@ -111,6 +124,11 @@
 					calc(var(--color-G) + var(--newUserMoodle-shadow-intesity)),
 					calc(var(--color-B) + var(--newUserMoodle-shadow-intesity))
 				);
+	}
+
+	#newUserForm h3 {
+		grid-column-start: 1;
+		grid-column-end: 4;
 	}
 
 	#newUserForm label {
@@ -141,8 +159,8 @@
 
 	#newUserForm button {
 		position: absolute;
-		bottom: 20px;
-		right: 30px;
+		bottom: 2.5vh;
+		right: 3vw;
 		border-radius: 12px;
 		border: none;
 		width: 12vw;
