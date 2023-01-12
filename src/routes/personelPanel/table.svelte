@@ -15,19 +15,23 @@
 	export let data;
 	export var selectedPersonel;
 
+	let selectedRow;
+
 	onMount(() => {
 		document.querySelectorAll('.tableRow').forEach(function (row) {
 			row.addEventListener('click', function () {
 				selectedPersonel = row.id;
+				selectedRow = row.firstChild.innerHTML;
+				console.log(selectedRow);
 
-				gorusulenFirma.set(row.childNodes[2].innerHTML);
-				gorusme_Kanali.set(row.childNodes[6].innerHTML);
-				gorusme_Durumu.set(row.childNodes[8].innerHTML);
-				yetkiliAdi.set(row.childNodes[10].innerHTML);
-				yetkiliTelefon.set(row.childNodes[12].innerHTML);
-				yetkiliEmail.set(row.childNodes[14].innerHTML);
-				verilenTeklif.set(row.childNodes[16].innerHTML);
-				aciklamalar.set(row.childNodes[20].innerHTML);
+				gorusulenFirma.set(document.getElementById(`firma,${selectedRow}`).innerHTML);
+				gorusme_Kanali.set(document.getElementById(`gorusmeKanali,${selectedRow}`).innerHTML);
+				gorusme_Durumu.set(document.getElementById(`durum,${selectedRow}`).innerHTML);
+				yetkiliAdi.set(document.getElementById(`yetkili,${selectedRow}`).innerHTML);
+				yetkiliTelefon.set(document.getElementById(`yetkiliTelefon,${selectedRow}`).innerHTML);
+				yetkiliEmail.set(document.getElementById(`yetkiliEmail,${selectedRow}`).innerHTML);
+				verilenTeklif.set(document.getElementById(`verilenTeklif,${selectedRow}`).innerHTML);
+				aciklamalar.set(document.getElementById(`aciklamalar,${selectedRow}`).innerHTML);
 
 				if (row.classList.contains('selected')) {
 					row.classList.remove('selected');
@@ -68,22 +72,22 @@
 		{#each data.gorusmeler as row, i}
 			<tr class="tableRow" id={row.id}>
 				<td>{i}</td>
-				<td>{row.firma}</td>
+				<td id="firma,{i}">{row.firma}</td>
 				<td
 					>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td
 				>
-				<td>{row.gorusme_kanali}</td>
-				<td>{row.durum}</td>
-				<td>{row.yetkili}</td>
-				<td>{formatPhoneNumber(row.yetkili_telefon)}</td>
-				<td>{row.yetkili_email}</td>
-				<td>{row.verilen_teklif}</td>
+				<td id="gorusmeKanali,{i}">{row.gorusme_kanali}</td>
+				<td id="durum,{i}">{row.durum}</td>
+				<td id="yetkili,{i}">{row.yetkili}</td>
+				<td id="yetkiliTelefon,{i}">{formatPhoneNumber(row.yetkili_telefon)}</td>
+				<td id="yetkiliEmail,{i}">{row.yetkili_email}</td>
+				<td id="verilenTeklif,{i}">{row.verilen_teklif}</td>
 				{#if `${row.icerik}`.slice(-9) != 'undefined'}
 					<ImageMoodle imagePath={row.icerik} />
 				{:else}
 					<td />
 				{/if}
-				<td>{row.aciklamalar}</td>
+				<td id="aciklamalar,{i}">{row.aciklamalar}</td>
 			</tr>
 		{/each}
 	</tbody>
