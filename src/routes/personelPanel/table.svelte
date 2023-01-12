@@ -21,8 +21,7 @@
 		document.querySelectorAll('.tableRow').forEach(function (row) {
 			row.addEventListener('click', function () {
 				selectedPersonel = row.id;
-				selectedRow = row.firstChild.innerHTML;
-				console.log(selectedRow);
+				selectedRow = parseInt(row.firstChild.innerHTML) - 1;
 
 				gorusulenFirma.set(document.getElementById(`firma,${selectedRow}`).innerHTML);
 				gorusme_Kanali.set(document.getElementById(`gorusmeKanali,${selectedRow}`).innerHTML);
@@ -71,7 +70,7 @@
 	<tbody>
 		{#each data.gorusmeler as row, i}
 			<tr class="tableRow" id={row.id}>
-				<td>{i}</td>
+				<td>{i + 1}</td>
 				<td id="firma,{i}">{row.firma}</td>
 				<td
 					>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td

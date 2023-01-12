@@ -4,6 +4,7 @@
 	import ImageMoodle from '$lib/imageMoodle.svelte';
 
 	const tableHeadings = [
+		'S. No',
 		'Görüşülen Firma',
 		'Görüşme Tarihi',
 		'Görüşme Kanalı',
@@ -42,8 +43,9 @@
 	</thead>
 
 	<tbody>
-		{#each data as row}
+		{#each data as row, i}
 			<tr class="appointmentTableRow">
+				<td>{i + 1}</td>
 				<td>{row.firma}</td>
 				<td
 					>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td
