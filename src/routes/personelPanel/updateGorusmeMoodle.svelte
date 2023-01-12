@@ -42,22 +42,22 @@
 			<label for="gorusulenFirma">Görüşülen Firma </label>
 			<input type="text" name="gorusulenFirma" value={$gorusulenFirma} /> <br />
 
-			<label>Görüşme Durumu</label><select name="gorusmeKanalı">
-				{#each gorusmeDurumları as gorusmeDurumu}
-					{#if $gorusme_Durumu === gorusmeDurumu.isim}
-						<option value={gorusmeDurumu.id} selected>{gorusmeDurumu.isim}</option>
-					{:else}
-						<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
-					{/if}
-				{/each}
-			</select><br />
-
 			<label>Görüşme Kanalı</label><select name="gorusmeDurumu">
 				{#each gorusmeKanalları as gorusmeKanalı}
 					{#if $gorusme_Kanali === gorusmeKanalı.isim}
 						<option value={gorusmeKanalı.id} selected>{gorusmeKanalı.isim}</option>
 					{:else}
 						<option value={gorusmeKanalı.id}>{gorusmeKanalı.isim}</option>
+					{/if}
+				{/each}
+			</select><br />
+
+			<label>Görüşme Durumu</label><select name="gorusmeKanalı">
+				{#each gorusmeDurumları as gorusmeDurumu}
+					{#if $gorusme_Durumu === gorusmeDurumu.isim}
+						<option value={gorusmeDurumu.id} selected>{gorusmeDurumu.isim}</option>
+					{:else}
+						<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
 					{/if}
 				{/each}
 			</select><br />

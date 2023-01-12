@@ -54,6 +54,9 @@ export const actions = {
             `delete from users where personel_id = ${data.get('selectedPersonel')};
             delete from  personel where id = ${data.get('selectedPersonel')};
         `
-        await db.getQuerry(querry);
+
+        if (data.get('selectedPersonel')) {
+            await db.getQuerry(querry);
+        }
     }
 };

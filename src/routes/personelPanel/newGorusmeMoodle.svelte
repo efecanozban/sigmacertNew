@@ -32,15 +32,15 @@
 
 			<label>Görüşme Kanalı</label>
 			<select name="gorusmeKanalı">
-				{#each gorusmeDurumları as gorusmeDurumu}
-					<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
+				{#each gorusmeKanalları as gorusmeKanalı}
+					<option value={gorusmeKanalı.id}>{gorusmeKanalı.isim}</option>
 				{/each}
 			</select><br />
 
 			<label>Görüşme Durumu</label>
 			<select name="gorusmeDurumu">
-				{#each gorusmeKanalları as gorusmeKanalı}
-					<option value={gorusmeKanalı.id}>{gorusmeKanalı.isim}</option>
+				{#each gorusmeDurumları as gorusmeDurumu}
+					<option value={gorusmeDurumu.id}>{gorusmeDurumu.isim}</option>
 				{/each}
 			</select><br />
 
