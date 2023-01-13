@@ -18,7 +18,7 @@
 		}
 	}
 
-	conicGradientString = `background: radial-gradient(circle closest-side, transparent 75%, rgb(190,150,190) 0), conic-gradient(${conicGradientString})`;
+	conicGradientString = `background: radial-gradient(circle closest-side, transparent 75%, rgb(150,150,150) 0), conic-gradient(${conicGradientString})`;
 </script>
 
 <figure class="pie-chart" style={conicGradientString}>

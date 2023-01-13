@@ -60,7 +60,7 @@ export const actions = {
         if (data.get("selectedRow") !== 'undefined') {
             let querry;
             if (data.get("icerik") !== 'undefined') {
-                querry = `call update_gorusme(
+                querry = `call update_gorusme_with_picture(
                     ${userId}, 
                     '${data.get("gorusulenFirma")}',
                     ${data.get("gorusmeKanalı")}, 
