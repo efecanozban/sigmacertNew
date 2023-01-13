@@ -71,7 +71,7 @@ export const actions = {
                     ${data.get("selectedRow")}
                 )`
 
-        await db.getQuerry(querry)
+        db.getQuerry(querry)
 
     }
 };
