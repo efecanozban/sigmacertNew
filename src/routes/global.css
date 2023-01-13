@@ -1,8 +1,10 @@
 :root {
-    --color: rgb(190, 150, 190);
-    --color-R: 190;
+    --color: rgb(150, 150, 150);
+    --color-R: 150;
     --color-G: 150;
-    --color-B: 190;
+    --color-B: 150;
+
+    --text-color: rgb(0, 0, 0);
 }
 
 html {
@@ -16,7 +18,7 @@ textarea {
 
 body {
     min-height: 100vh;
-    background-color: rgb(190, 150, 190);
+    background-color: var(--color);
     margin: 0px;
     padding: 0px;
 }
@@ -44,7 +46,7 @@ td {
 
 button,
 input {
-    font-size: 16px;
+    font-size: 18px;
 
 }
 
@@ -54,7 +56,7 @@ label,
 p,
 select,
 h3 {
-    color: rgb(65, 65, 65);
+    color: var(--text-color);
 
 }
 
