@@ -45,13 +45,13 @@ export const actions = {
             '${data.get("yetkiliEMail")}',
             '${data.get("verilenTeklif")}',
             '${data.get("aciklamalar")}')`
-        db.getQuerry(querry);
+        await db.getQuerry(querry);
     },
 
     deleteGorusme: async ({ request }) => {
         const data = await request.formData()
         const querry = `delete from gorusmeler where id = ${data.get("selectedRow")}`
-        db.getQuerry(querry)
+        await db.getQuerry(querry)
     },
 
     updateGorusme: async ({ request }) => {
@@ -90,7 +90,7 @@ export const actions = {
                 )`
             }
 
-            db.getQuerry(querry)
+            await db.getQuerry(querry)
         }
     }
 };
