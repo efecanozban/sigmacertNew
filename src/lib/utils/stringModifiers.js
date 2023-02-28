@@ -11,6 +11,6 @@ export function formatPhoneNumber(phoneNumberString) {
 }
 
 export function noDashPhoneNumber(phoneNumberString) {
-    let res = phoneNumberString.split("-").join("");
-    return res
+    let res = phoneNumberString?.split("-").join("");
+    return res ?? ""
 }

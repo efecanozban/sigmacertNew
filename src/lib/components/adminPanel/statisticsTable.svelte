@@ -37,21 +37,21 @@
 	});
 </script>
 
-<table>
+<table class=" border-r-2 border-dashed border-gray-400 border-collapse block">
 	<thead>
-		<tr>
+		<tr class=" leading-4">
 			{#each tableHeadings as heading}
-				<th>{heading}</th>
+				<th class="font-normal">{heading}</th>
 			{/each}
 		</tr>
 	</thead>
 
 	<tbody>
 		{#each data as row, i}
-			<tr class="statisticsTableRow" id={i}>
-				<td class="staticsTableCell">{row._personel}</td>
-				<td class="staticsTableCell">{row._count}</td>
-				<td class="staticsTableCell">{appointmentPercentages[i]}</td>
+			<tr class="statisticsTableRow leading-8" id={i}>
+				<td class="staticsTableCell whitespace-nowrap font-bold">{row._personel}</td>
+				<td class="staticsTableCell whitespace-nowrap font-bold">{row._count}</td>
+				<td class="staticsTableCell whitespace-nowrap font-bold">{appointmentPercentages[i]}</td>
 				<td style="display: none;" id={row._personel_id} />
 			</tr>
 		{/each}
@@ -59,18 +59,6 @@
 </table>
 
 <style>
-	table {
-		border-collapse: collapse;
-	}
-
-	tr {
-		height: 2rem;
-	}
-
-	td {
-		white-space: nowrap;
-	}
-
 	td,
 	th {
 		padding: 2px 12px;

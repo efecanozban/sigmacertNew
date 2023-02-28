@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.neomorphic-sm {
+    box-shadow: 3px 3px 6px rgb(179, 183, 189), -3px -3px 6px rgb(239, 243, 249);
+}
+
+.neomorphic-lg {
+    box-shadow: 6px 6px 12px rgb(179, 183, 189), -6px -6px 12px rgb(239, 243, 249);
+}
+
+.neomorphic-sm-inset {
+    box-shadow: inset 3px 3px 6px rgb(179, 183, 189), inset -3px -3px 6px rgb(239, 243, 249);
+}
+
+.neomorphic-lg-inset {
+    box-shadow: inset 6px 6px 12px rgb(179, 183, 189), inset -6px -6px 12px rgb(239, 243, 249);
+}
+
+
+
+th {
+    text-align: left;
+    padding-left: 12px;
+}
+
+td {
+    padding-left: 12px;
+
+}
+
+button:active {
+    box-shadow: inset 3px 3px 6px rgb(179, 183, 189), inset -3px -3px 6px rgb(239, 243, 249);
+}
+
+.selected {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+table::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+table {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

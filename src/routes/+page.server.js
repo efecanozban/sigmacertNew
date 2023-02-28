@@ -1,35 +1,45 @@
-import { SECRET_USERS_QUERRY } from '$env/static/private'
-import * as db from '$lib/server/database';
-import { fail, redirect } from '@sveltejs/kit';
-import { userID, logedIn } from '$lib/store.js'
+import { CheckUser, CreateSession, DeleteSession } from '$lib/server/db.js'
+import { redirect } from '@sveltejs/kit';
 
-var users;
+let sessionId;
+
+export async function load({ cookies }) {
+    sessionId = cookies.get("sessionId")
+}
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    default: async ({ request }) => {
-        users = await db.getQuerry(SECRET_USERS_QUERRY)
-        const data = await request.formData()
-        checkUser(data)
-    }
-};
+    // login action
+    login: async ({ cookies, request }) => {
+        const data = await request.formData();
+        const username = data.get('kullaniciAdi');
+        const password = data.get('sifre');
+        // check if user is exists on db
+        const res = await CheckUser(username, password);
 
-function checkUser(data) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username == data.get("kullaniciAdi") && users[i].password == data.get("sifre")) {
-            if (users[i].type == 'M') {
-                logedIn.set("m");
-                throw redirect(303, '/adminPanel');
-            }
-            else if (users[i].type == 'P') {
-                logedIn.set("p");
-                userID.set(users[i].personel_id)
-                throw redirect(303, '/personelPanel');
+        // if user exists, set a cookie with unique session id
+        if (res.success) {
+            cookies.set('sessionId', await CreateSession(res.user));
+            switch (res.user[0].type) {
+                case 'M':
+                    throw redirect(303, "/adminPanel")
+                    break;
+                case 'P':
+                    throw redirect(303, "/personelPanel")
+                    break;
             }
         }
 
+        // if there is no such user return an error message
         else {
-            logedIn.set(0);
+            return { success: false, message: "no such user exists" };
         }
+    },
+
+    // logout action
+    logout: async ({ cookies }) => {
+        // delete the session both on cookies and db
+        await DeleteSession(sessionId);
+        cookies.delete('sessionId');
     }
 }
