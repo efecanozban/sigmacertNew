@@ -19,7 +19,13 @@ export const actions = {
 
         // if user exists, set a cookie with unique session id
         if (res.success) {
-            cookies.set('sessionId', await CreateSession(res.user));
+            cookies.set('sessionId', await CreateSession(res.user), {
+                path: '/',
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: false,
+                maxAge: 60 * 60 * 24 * 30
+            });
             switch (res.user[0].type) {
                 case 'M':
                     throw redirect(303, "/adminPanel")
