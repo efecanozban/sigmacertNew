@@ -1,10 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
 	import { formatPhoneNumber } from '$lib/utils/stringModifiers.js';
-	import { append_hydration_dev } from 'svelte/internal';
+	import TableFilter from '$lib/components/general/tableFilter.svelte';
+	import ExportToCsvButton from '$lib/components/general/exportToCSVButton.svelte';
 	// data consist of gorusmeler, gorusme_kanallari, gorusme_durumlari
 	export let data;
 	export var selectedGorusme;
+
+	let gorusmelerTable;
+	let gorusmelerTableRows = [];
 
 	// moodle that shown when an image icon is clicked
 	let imageMoodle;
@@ -34,6 +38,24 @@
 
 		// find imageMoodle
 		imageMoodle = document.getElementById('imageMoodle');
+		// find gorusmeler table
+		gorusmelerTable = document.getElementById('gorusmelerTable');
+
+		[...gorusmelerTable.getElementsByTagName('tr')].forEach(function (row) {
+			var dataRow = [];
+
+			[...row.getElementsByTagName('th')].forEach(function (col, colIndex) {
+				if (col.innerHTML != 'Dosya' && col.innerHTML != 'id') dataRow.push(col.innerHTML);
+			});
+
+			[...row.getElementsByTagName('td')].forEach(function (col, colIndex) {
+				if (!col.classList.contains('hidden')) dataRow.push(col.innerHTML);
+			});
+
+			gorusmelerTableRows.push(dataRow);
+		});
+
+		console.log(gorusmelerTableRows);
 	});
 
 	const tableHeadings = [
@@ -51,7 +73,15 @@
 	];
 </script>
 
-<table class="w-[80vw] h-[60vh] m-auto rounded-xl neomorphic-sm block overflow-scroll">
+<div class="flex w-[79vw] m-auto mt-[4vh] mb-[2vh] justify-between">
+	<ExportToCsvButton data={gorusmelerTableRows} dataType="ArrayData" />
+	<TableFilter filterTable={gorusmelerTable} />
+</div>
+
+<table
+	id="gorusmelerTable"
+	class="w-[80vw] h-[60vh] m-auto rounded-xl neomorphic-sm block overflow-scroll"
+>
 	<thead>
 		<tr>
 			{#each tableHeadings as heading}
@@ -59,36 +89,33 @@
 			{/each}
 		</tr>
 	</thead>
-	<tbody>
-		{#each data.gorusmeler as row, i}
-			<tr
-				class="gorusmeRow leading-7 whitespace-nowrap rounded neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] "
-			>
-				<td>{i + 1}</td>
-				<td id="firma,{i + 1}">{row.firma}</td>
-				<td
-					>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td
-				>
-				<td id="gorusmeKanali,{i + 1}">{row.gorusme_kanali}</td>
-				<td id="durum,{i + 1}">{row.durum}</td>
-				<td id="yetkili,{i + 1}">{row.yetkili}</td>
-				<td id="yetkiliTelefon,{i + 1}">{formatPhoneNumber(row.yetkili_telefon)}</td>
-				<td id="yetkiliEmail,{i + 1}">{row.yetkili_email}</td>
-				<td id="verilenTeklif,{i + 1}">{row.verilen_teklif}</td>
-				{#if `${row.icerik}`.slice(-9) != 'undefined'}
-					<!-- Actual Image -->
-					<img class="hidden" id="dosya" src={row.icerik} alt="içerik yok" />
-					<!-- The Generic Icon -->
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<img class="max-h-7" src="imageIcon.png" alt="içerik yok" on:click={toggleImageMoodle} />
-				{:else}
-					<td />
-				{/if}
-				<td id="aciklamalar,{i + 1}">{row.aciklamalar}</td>
-				<td class="hidden id">{row.id}</td>
-			</tr>
-		{/each}
-	</tbody>
+
+	{#each data.gorusmeler as row, i}
+		<tr
+			class="gorusmeRow leading-7 whitespace-nowrap rounded neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] "
+		>
+			<td>{i + 1}</td>
+			<td id="firma,{i + 1}">{row.firma}</td>
+			<td>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td>
+			<td id="gorusmeKanali,{i + 1}">{row.gorusme_kanali}</td>
+			<td id="durum,{i + 1}">{row.durum}</td>
+			<td id="yetkili,{i + 1}">{row.yetkili}</td>
+			<td id="yetkiliTelefon,{i + 1}">{formatPhoneNumber(row.yetkili_telefon)}</td>
+			<td id="yetkiliEmail,{i + 1}">{row.yetkili_email}</td>
+			<td id="verilenTeklif,{i + 1}">{row.verilen_teklif}</td>
+			{#if `${row.icerik}`.slice(-9) != 'undefined'}
+				<!-- Actual Image -->
+				<img class="hidden" id="dosya" src={row.icerik} alt="içerik yok" />
+				<!-- The Generic Icon -->
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<img class="max-h-7" src="imageIcon.png" alt="içerik yok" on:click={toggleImageMoodle} />
+			{:else}
+				<td />
+			{/if}
+			<td id="aciklamalar,{i + 1}">{row.aciklamalar}</td>
+			<td class="hidden id">{row.id}</td>
+		</tr>
+	{/each}
 </table>
 
 <!-- Image Moodle -->

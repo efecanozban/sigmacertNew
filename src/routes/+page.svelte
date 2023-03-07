@@ -10,7 +10,7 @@
 		if (form?.success == false) {
 			switch (form?.message) {
 				case 'no such user exists':
-					alert('No such user!');
+					alert('Yanlış kullanıcı adı veya şifre girdiniz');
 					break;
 			}
 		}

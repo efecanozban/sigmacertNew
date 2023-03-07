@@ -1,6 +1,8 @@
 <script>
 	export let data;
 	import { onMount } from 'svelte';
+	import TableFilter from '$lib/components/general/tableFilter.svelte';
+	import ExportToCsvButton from '$lib/components/general/exportToCSVButton.svelte';
 
 	const tableHeadings = [
 		'S. No',
@@ -17,6 +19,117 @@
 		'Açıklamalar'
 	];
 
+	let appointmentsTable;
+	let appointmentTableRows = [];
+	data.forEach((row, i) =>
+		appointmentTableRows.push({
+			index: i + 1,
+			personel: row.personel,
+			firma: row.firma,
+			gorusme_tarihi: `${row.tarih.getDate()} / ${
+				row.tarih.getMonth() + 1
+			} / ${row.tarih.getFullYear()}`,
+			gorusme_kanali: row.gorusme_kanali,
+			gorusme_durumu: row.durum,
+			yetkili: row.yetkili,
+			yetkili_telefonu: row.yetkili_telefon,
+			yetkili_email: row.yetkili_email,
+			verilen_teklif: row.verilen_teklif,
+			dosya: row.icerik,
+			aciklamalar: row.aciklamalar,
+			id: row.id
+		})
+	);
+
+	function FillAppointmentsTable(tableSortCriteria = 0, ascending = true) {
+		// delete existing children except tr with th's
+		while (appointmentsTable.childNodes.length > 1) {
+			appointmentsTable.removeChild(appointmentsTable.lastElementChild);
+		}
+
+		appointmentTableRows
+			.sort((row1, row2) =>
+				Object.values(row1)[tableSortCriteria] > Object.values(row2)[tableSortCriteria]
+					? ascending
+						? 1
+						: -1
+					: ascending
+					? -1
+					: 1
+			)
+			.forEach((row) => {
+				let new_tr = document.createElement('tr');
+				new_tr.className =
+					'appointmentTableRow leading-7 whitespace-nowrap rounded-xl neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] ';
+
+				Object.entries(row).forEach((cell) => {
+					let new_td = document.createElement('td');
+
+					if (cell[0] != 'dosya') {
+						new_td.innerHTML = cell[1];
+						new_td.className = 'whitespace-nowrap font-bold pr-8';
+						if (cell[0] == 'id') [(new_td.className = 'hidden id')];
+					} else {
+						let actual_img = document.createElement('img');
+						actual_img.id = 'dosya';
+						if (cell[1]?.split(',')?.[1] != 'undefined') {
+							actual_img.src = `${cell[1]}`;
+						}
+						actual_img.className = 'hidden';
+
+						let icon_img = document.createElement('img');
+						icon_img.src = 'imageIcon.png';
+						icon_img.className = 'max-h-7';
+						icon_img.addEventListener('click', toggleImageMoodle);
+
+						new_td.appendChild(actual_img);
+						new_td.appendChild(icon_img);
+						new_td.classList.add('Dosya');
+					}
+
+					new_tr.appendChild(new_td);
+				});
+
+				new_tr.addEventListener('click', function () {
+					if (new_tr.classList.contains('selected')) {
+						new_tr.classList.remove('selected');
+						deleteGorusmeButton.classList.add('hidden');
+						deleteGorusmeWarned = false;
+					} else {
+						document.querySelectorAll('.selected').forEach(function (row) {
+							row.classList.remove('selected');
+						});
+						new_tr.classList.add('selected');
+						selectedGorusme = new_tr;
+						deleteGorusmeWarned = false;
+						deleteGorusmeButton.innerHTML = 'Görüşmeyi Sil';
+						deleteGorusmeButton.classList.remove('hidden');
+						deleteGorusmeButton.style.top =
+							(new_tr.getBoundingClientRect().top + window.scrollY).toString() + 'px';
+					}
+				});
+				appointmentsTable.appendChild(new_tr);
+			});
+	}
+
+	let lastSortedColumn = 0;
+	let lastSortAscending = true;
+	function SortTable(e) {
+		let columnId = parseInt(e.srcElement.id[e.srcElement.id.length - 1]);
+		if (lastSortedColumn != columnId) FillAppointmentsTable(columnId);
+		else {
+			FillAppointmentsTable(columnId, !lastSortAscending);
+			lastSortAscending = !lastSortAscending;
+		}
+		lastSortedColumn = columnId;
+
+		document
+			.getElementById('appointmentsTableHeaderRow')
+			.childNodes.forEach((th) => th.classList.add('font-normal'));
+		e.srcElement.classList.remove('font-normal');
+		e.srcElement.classList.add('font-bold');
+	}
+
 	let imageMoodle;
 	function toggleImageMoodle() {
 		imageMoodle.classList.contains('hidden')
@@ -25,6 +138,7 @@
 	}
 
 	let selectedGorusme;
+	$: console.log(selectedGorusme);
 	let deleteGorusmeButton;
 	let deleteGorusmeWarned = false;
 
@@ -39,74 +153,34 @@
 	}
 
 	onMount(() => {
-		document.querySelectorAll('.appointmentTableRow').forEach(function (row) {
-			row.addEventListener('click', function () {
-				if (row.classList.contains('selected')) {
-					row.classList.remove('selected');
-					deleteGorusmeButton.classList.add('hidden');
-					deleteGorusmeWarned = false;
-				} else {
-					document.querySelectorAll('.selected').forEach(function (row) {
-						row.classList.remove('selected');
-					});
-					row.classList.add('selected');
-					selectedGorusme = row;
-					deleteGorusmeWarned = false;
-					deleteGorusmeButton.innerHTML = 'Görüşmeyi Sil';
-					deleteGorusmeButton.classList.remove('hidden');
-					deleteGorusmeButton.style.top =
-						(row.getBoundingClientRect().top + window.scrollY).toString() + 'px';
-				}
-			});
-		});
-
+		// find appointmentsTable
+		appointmentsTable = document.getElementById('appointmentsTable');
 		// find imageMoodle
 		imageMoodle = document.getElementById('imageMoodle');
 		// find deleteGorusmeButton
 		deleteGorusmeButton = document.getElementById('deleteGorusmeButton');
+		// fill appointments table programatically
+		FillAppointmentsTable(0);
 	});
 </script>
 
-<table class="w-[80vw] h-[60vh] mt-[4vh] m-auto rounded-xl block overflow-scroll">
+<!-- Table Filter -->
+<div class="flex w-[79vw] m-auto mt-[4vh] mb-[2vh] justify-between ">
+	<ExportToCsvButton data={appointmentTableRows} dataType="TableData" />
+	<TableFilter filterTable={appointmentsTable} />
+</div>
+
+<!-- Appointments Table -->
+<table id="appointmentsTable" class="w-[80vw] h-[60vh] m-auto rounded-xl block overflow-scroll">
 	<thead>
-		<tr class="neomorphic-sm-inset rounded-xl">
-			{#each tableHeadings as heading}
-				<th class="font-normal pr-16 pb-2">{heading}</th>
+		<tr id="appointmentsTableHeaderRow" class="neomorphic-sm-inset rounded-xl">
+			{#each tableHeadings as heading, i}
+				<th id="appointmentsTableHeading,{i}" on:click={SortTable} class="font-normal pr-16 pb-2"
+					>{heading}</th
+				>
 			{/each}
 		</tr>
 	</thead>
-
-	<tbody>
-		{#each data as row, i}
-			<tr
-				class="appointmentTableRow leading-7 whitespace-nowrap rounded-xl neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] "
-			>
-				<td>{i + 1}</td>
-				<td>{row.personel}</td>
-				<td>{row.firma}</td>
-				<td
-					>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td
-				>
-				<td>{row.gorusme_kanali}</td>
-				<td>{row.durum}</td>
-				<td>{row.yetkili}</td>
-				<td>{row.yetkili_telefon}</td>
-				<td>{row.yetkili_email}</td>
-				<td>{row.verilen_teklif}</td>
-				{#if `${row.icerik}`.slice(-9) != 'undefined'}
-					<!-- Actual Image -->
-					<img class="hidden" id="dosya" src={row.icerik} alt="içerik yok" />
-					<!-- The Generic Icon -->
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<img class="max-h-7" src="imageIcon.png" alt="içerik yok" on:click={toggleImageMoodle} />
-				{:else}
-					<td />
-				{/if}
-				<td>{row.aciklamalar}</td>
-				<td class="hidden id">{row.id}</td>
-			</tr>
-		{/each}
-	</tbody>
 </table>
 
 <!-- Delete Gorusme Button -->
@@ -142,11 +216,3 @@
 		alt=""
 	/>
 </div>
-
-<style>
-	td {
-		white-space: nowrap;
-		font-weight: 600;
-		padding-right: 3rem;
-	}
-</style>
