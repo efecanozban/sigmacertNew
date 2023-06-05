@@ -132,7 +132,7 @@ export async function GetStatisticsStatus() {
 
 export async function InsertUser(isim, soyisim, eMail, telefon, kullaniciAdi, sifre) {
     return GetQuery(
-        `insert into personel (isim, soyisim, telefon, e_mail)
+        `insert into personel (isim, soyisim, e_mail, telefon)
     values(
         '${isim}',
         '${soyisim}',
