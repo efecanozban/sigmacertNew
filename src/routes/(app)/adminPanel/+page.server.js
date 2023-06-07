@@ -1,10 +1,13 @@
-import { GetAppointments, GetStatistics, GetStatisticsStatus, InsertUser, DeleteUser, DeleteGorusme } from '$lib/server/db.js';
+import { GetAppointments, GetStatistics, GetStatisticsStatus, InsertUser, DeleteUser, DeleteGorusme, getUserFromSession } from '$lib/server/db.js';
 import { redirect } from '@sveltejs/kit';
 
-export async function load() {
+let user;
+
+export async function load({ cookies }) {
+    user = await getUserFromSession(cookies.get("sessionId"))
     return {
-        appointments: GetAppointments(),
-        statistics: await GetStatistics(),
+        appointments: GetAppointments(user[0].firma_id),
+        statistics: await GetStatistics(user[0].firma_id),
         statistics_status: await GetStatisticsStatus()
     }
 }

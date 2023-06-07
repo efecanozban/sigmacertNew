@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import TableFilter from '$lib/components/general/tableFilter.svelte';
 	import ExportToCsvButton from '$lib/components/general/exportToCSVButton.svelte';
+	import { bubble } from 'svelte/internal';
 
 	const tableHeadings = [
 		'S. No',
@@ -152,6 +153,18 @@
 		}
 	}
 
+	function downloadContent() {
+		console.log(selectedGorusme?.getElementsByTagName('img')[0].src);
+		if (
+			selectedGorusme?.getElementsByTagName('img')[0].src.slice(-4) != 'null' &&
+			selectedGorusme?.getElementsByTagName('img')[0].src != ''
+		) {
+			document.getElementById('downloadContent').click();
+		} else {
+			alert('İndirilecek bir fotoğraf bulunamadı.');
+		}
+	}
+
 	onMount(() => {
 		// find appointmentsTable
 		appointmentsTable = document.getElementById('appointmentsTable');
@@ -163,6 +176,14 @@
 		FillAppointmentsTable(0);
 	});
 </script>
+
+<!-- svelte-ignore a11y-missing-content -->
+<a
+	id="downloadContent"
+	class="hidden"
+	href={selectedGorusme?.getElementsByTagName('img')[0].src}
+	download
+/>
 
 <!-- Table Filter -->
 <div class="flex w-[79vw] m-auto mt-[4vh] mb-[2vh] justify-between ">
@@ -204,15 +225,14 @@
 <!-- Image Moodle -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="imageMoodle" class="backdrop hidden flex justify-center" on:click|self={toggleImageMoodle}>
-	<a
-		class="absolute top-[5vh] h-12 w-48 text-white text-xl border-dotted border-white border-4 rounded-full whitespace-nowrap text-center"
-		href={selectedGorusme?.getElementsByTagName('img')[0].src}
-		download>Fotoğrafı indir</a
-	>
-
 	<img
 		class="h-min max-h-[90vh] absolute left-[50vw] top-[40vh] translate-x-[-50%] translate-y-[-50%]"
 		src={selectedGorusme?.getElementsByTagName('img')[0]?.src ?? ''}
 		alt=""
 	/>
+
+	<button
+		class="absolute top-[5vh] h-12 w-48 text-white text-xl border-dotted border-white border-4 rounded-full whitespace-nowrap text-center"
+		on:click={downloadContent}>Fotoğrafı indir</button
+	>
 </div>

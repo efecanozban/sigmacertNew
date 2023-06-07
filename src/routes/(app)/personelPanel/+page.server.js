@@ -6,7 +6,7 @@ let user;
 export async function load({ cookies }) {
     user = await getUserFromSession(cookies.get("sessionId"))
     return {
-        gorusmeler: await GetGorusmeler(user[0].personel_id),
+        gorusmeler: await GetGorusmeler(user[0].personel_id, user[0].firma_id),
         gorusmeKanallari: await GetGorusmeKanallari(),
         gorusmeDurumlari: await GetGorusmeDurumlari()
     }

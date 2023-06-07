@@ -1,6 +1,6 @@
 <div class="absolute top-[20vh] w-full flex justify-center">
 	<form
-		class="h-[65vh] w-[60vw] md:w-[40vw] lg:w-[30vw] text-center bg-inherit rounded-[50px] bg-[url('/favicon.png')] bg-no-repeat bg-top bg-[length:42vh_auto] neomorphic-sm"
+		class="h-[65vh] w-[60vw] md:w-[40vw] lg:w-[30vw] text-center bg-inherit rounded-[50px] bg-[url('/favicon.png')] bg-no-repeat bg-top bg-[length:47vh_auto] neomorphic-sm"
 		method="POST"
 		action="?/login"
 	>

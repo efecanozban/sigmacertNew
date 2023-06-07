@@ -33,7 +33,7 @@ export async function DeleteSession(sessionId) {
     return GetQuery(`delete from sessions where id = '${sessionId}'`)
 }
 
-export async function GetGorusmeler(userId) {
+export async function GetGorusmeler(userId, firma_id) {
     return GetQuery(`select concat(personel.isim,' ', personel.soyisim) as personel, gorusmeler.firma, gorusmeler.tarih, gorusmeler.yetkili,
                      gorusmeler.yetkili_telefon, gorusmeler.yetkili_email, gorusmeler.verilen_teklif, iletisim_yolu.isim as gorusme_kanali,
                      durum.isim as durum, dosya.icerik, gorusmeler.aciklamalar ,gorusmeler.id from gorusmeler 
@@ -41,7 +41,8 @@ export async function GetGorusmeler(userId) {
                      left join iletisim_yolu on gorusmeler.iletisim_yolu_id = iletisim_yolu.id 
                      left join durum on durum.id = gorusmeler.durum_id 
                      left join dosya on dosya.id = gorusmeler.dosya_id
-                    where personel_id = ${userId}`
+                     left join users on users.personel_id = gorusmeler.personel_id
+                    where gorusmeler.personel_id = ${userId} and firma_id = ${firma_id}`
     )
 }
 
@@ -111,7 +112,7 @@ export async function UpdateGorusme(userId,
             ${gorusme_id})`
     )
 }
-export async function GetAppointments() {
+export async function GetAppointments(firma_id) {
     return GetQuery(`select concat(personel.isim,' ', personel.soyisim) as personel,
     gorusmeler.firma, gorusmeler.tarih, gorusmeler.yetkili, gorusmeler.yetkili_telefon, 
     gorusmeler.yetkili_email,gorusmeler.verilen_teklif, iletisim_yolu.isim as gorusme_kanali,
@@ -119,15 +120,22 @@ export async function GetAppointments() {
     left join personel on gorusmeler.personel_id = personel.id 
     left join iletisim_yolu on gorusmeler.iletisim_yolu_id = iletisim_yolu.id 
     left join durum on durum.id = gorusmeler.durum_id 
-    left join dosya on dosya.id = gorusmeler.dosya_id`)
+    left join dosya on dosya.id = gorusmeler.dosya_id
+    left join users on users.personel_id = gorusmeler.personel_id
+    where firma_id = ${firma_id}
+    `)
 }
 
-export async function GetStatistics() {
-    return GetQuery(`select * from get_personel_statistics()`)
+export async function GetStatistics(firma_id) {
+    return GetQuery(`select * from get_personel_statistics(${firma_id})`)
 }
 
 export async function GetStatisticsStatus() {
     return GetQuery(`select * from get_all_gorusme_counts()`)
+}
+
+export async function GetFirmaName(firma_id) {
+    return GetQuery(`select name from firmalar where id= ${firma_id}`)
 }
 
 export async function InsertUser(isim, soyisim, eMail, telefon, kullaniciAdi, sifre) {

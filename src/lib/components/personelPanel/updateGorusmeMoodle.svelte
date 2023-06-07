@@ -69,7 +69,7 @@
 			value={gorusulenFirma}
 		/> <br />
 
-		<select class="rounded-xl pl-4 w-2/3 mb-4" name="gorusmeDurumu">
+		<select class="rounded-xl pl-4 w-2/3 mb-4" name="gorusmeKanalı">
 			{#each gorusmeKanallari as gorusmeKanali}
 				{#if gorusme_Kanali === gorusmeKanali.isim}
 					<option value={gorusmeKanali.id} selected>{gorusmeKanali.isim}</option>
@@ -79,7 +79,7 @@
 			{/each}
 		</select><br />
 
-		<select class="rounded-xl pl-4 w-2/3 mb-4" name="gorusmeKanalı">
+		<select class="rounded-xl pl-4 w-2/3 mb-4" name="gorusmeDurumu">
 			{#each gorusmeDurumlari as gorusmeDurumu}
 				{#if gorusme_Durumu === gorusmeDurumu.isim}
 					<option value={gorusmeDurumu.id} selected>{gorusmeDurumu.isim}</option>
