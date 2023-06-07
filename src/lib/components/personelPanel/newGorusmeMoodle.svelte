@@ -30,7 +30,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="newGorusmeMoodle" class="hidden backdrop" on:click|self={closeNewGorusmeMoodle}>
 	<form
-		class="relative w-[30vw] h-[60vh] top-[40vh] bg-gray-300 rounded-xl text-center translate-y-[-50%] m-auto"
+		class="relative w-[30vw] h-[60vh] top-[40vh] bg-[#F5F7FB] rounded-xl text-center translate-y-[-50%] m-auto"
 		id="newUserForm"
 		action="/personelPanel?/newGorusme"
 		method="POST"

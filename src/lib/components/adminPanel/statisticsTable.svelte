@@ -3,7 +3,7 @@
 	export let data;
 	export let selectedPersonel;
 	export let selectedPersonelId;
-	const tableHeadings = ['Personel', 'Toplam Görüşme Sayısı', 'Görüşme Oranı (%)'];
+	const tableHeadings = ['Personel', 'Görüşme Sayısı', 'Görüşme Oranı (%)'];
 
 	export let appointmentPercentages;
 	let sum = 0;
@@ -37,23 +37,29 @@
 	});
 </script>
 
-<table class=" border-r-2 border-dashed border-gray-400 border-collapse block">
+<table class=" border-r-2 border-dashed border-gray-400 border-separate block bg-white">
 	<thead>
 		<tr class=" leading-4">
 			{#each tableHeadings as heading}
-				<th class="font-normal">{heading}</th>
+				<th class="font-normal text-[#383B74] pb-12">{heading}</th>
 			{/each}
 		</tr>
+
+		<tr class="space" />
 	</thead>
 
 	<tbody>
 		{#each data as row, i}
 			<tr class="statisticsTableRow leading-8" id={i}>
-				<td class="staticsTableCell whitespace-nowrap font-bold">{row._personel}</td>
-				<td class="staticsTableCell whitespace-nowrap font-bold">{row._count}</td>
-				<td class="staticsTableCell whitespace-nowrap font-bold">{appointmentPercentages[i]}</td>
+				<td class="text-[#383B74] staticsTableCell whitespace-nowrap font-bold">{row._personel}</td>
+				<td class="text-[#383B74] staticsTableCell whitespace-nowrap font-bold">{row._count}</td>
+				<td class="text-[#383B74] staticsTableCell whitespace-nowrap font-bold"
+					>{appointmentPercentages[i]}</td
+				>
 				<td style="display: none;" id={row._personel_id} />
 			</tr>
+
+			<tr class="space" />
 		{/each}
 	</tbody>
 </table>

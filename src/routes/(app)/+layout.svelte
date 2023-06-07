@@ -4,19 +4,20 @@
 </script>
 
 <header>
-	<div
-		class="w-full h-[12vh] bg-grey-300 bg-[url('favicon.png')] bg-center bg-no-repeat  bg-[length:16vh_auto] neomorphic-sm text-white text-xl font-semibold"
-	>
-		<form action="/?/logout" method="post" class="inline-block relative left-12 top-1/3">
-			<button class=" w-[12vw] h-[4vh] neomorphic-sm rounded-3xl">Çıkış Yap</button>
-		</form>
+	<div class="flex justify-between w-full h-[12vh] bg-white text-grey-100 text-xl font-semibold">
+		<img src="LateralLogo.png" alt="" class="relative left-[10vw] h-24 top-2" />
 
-		<h1 class="inline-block relative left-[15vw] top-1/3 text-white text-3xl font-bold h-[4vh]">
-			Panel Name
-		</h1>
-		<h1 class="inline-block relative left-[50vw] top-1/3 text-white text-3xl font-bold h-[4vh]">
-			{firma[0].name.toUpperCase()}
-		</h1>
+		<div class="flex justify-end">
+			<form action="/?/logout" method="post" class="pr-8 pt-8">
+				<button class=" w-[2vw] h-[4vh] rounded-3xl text-[#9598B7]">
+					<img src="logout.svg" alt="" />
+				</button>
+			</form>
+
+			<h1 class="pr-[10vw] pt-8 text-grey-100 text-3xl font-bold h-[4vh] text-[#9598B7]">
+				{firma[0].name.toUpperCase()}
+			</h1>
+		</div>
 	</div>
 </header>
 

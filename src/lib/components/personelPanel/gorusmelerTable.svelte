@@ -1,14 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
 	import { formatPhoneNumber } from '$lib/utils/stringModifiers.js';
-	import TableFilter from '$lib/components/general/tableFilter.svelte';
-	import ExportToCsvButton from '$lib/components/general/exportToCSVButton.svelte';
+
 	// data consist of gorusmeler, gorusme_kanallari, gorusme_durumlari
 	export let data;
 	export var selectedGorusme;
 
 	let gorusmelerTable;
-	let gorusmelerTableRows = [];
 
 	// moodle that shown when an image icon is clicked
 	let imageMoodle;
@@ -50,34 +48,17 @@
 
 		// find imageMoodle
 		imageMoodle = document.getElementById('imageMoodle');
-		// find gorusmeler table
 		gorusmelerTable = document.getElementById('gorusmelerTable');
-
-		[...gorusmelerTable.getElementsByTagName('tr')].forEach(function (row) {
-			var dataRow = [];
-
-			[...row.getElementsByTagName('th')].forEach(function (col, colIndex) {
-				if (col.innerHTML != 'Dosya' && col.innerHTML != 'id') dataRow.push(col.innerHTML);
-			});
-
-			[...row.getElementsByTagName('td')].forEach(function (col, colIndex) {
-				if (!col.classList.contains('hidden')) dataRow.push(col.innerHTML);
-			});
-
-			gorusmelerTableRows.push(dataRow);
-		});
-
-		console.log(gorusmelerTableRows);
 	});
 
 	const tableHeadings = [
-		'Satır No.',
-		'Görüşülen Firma',
-		'Görüşme Tarihi',
-		'Görüşme Kanalı',
-		'Görüşme Durumu',
-		'Yetkili Adı',
-		'Yetkili Telefonu',
+		'ID',
+		'Firma İsmi',
+		'Tarih',
+		'Kanal',
+		'Durum',
+		'Yetkili',
+		'Yetkili Tel.',
 		'Yetkili E-mail',
 		'Verilen Teklif',
 		'Dosya',
@@ -93,36 +74,42 @@
 	download
 />
 
-<div class="flex w-[79vw] m-auto mt-[4vh] mb-[2vh] justify-between">
-	<ExportToCsvButton data={gorusmelerTableRows} dataType="ArrayData" />
-	<TableFilter filterTable={gorusmelerTable} />
-</div>
-
-<table
-	id="gorusmelerTable"
-	class="w-[80vw] h-[60vh] m-auto rounded-xl neomorphic-sm block overflow-scroll"
->
+<table id="gorusmelerTable" class="w-[80vw] h-[60vh] m-auto rounded-xl block overflow-scroll">
 	<thead>
 		<tr>
 			{#each tableHeadings as heading}
-				<th class="font-normal pr-16">{heading}</th>
+				<th class=" pr-16 whitespace-nowrap pb-4 text-[#383B74] text-bold text-md">{heading}</th>
 			{/each}
 		</tr>
 	</thead>
 
 	{#each data.gorusmeler as row, i}
-		<tr
-			class="gorusmeRow leading-7 whitespace-nowrap rounded neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] "
-		>
-			<td>{i + 1}</td>
-			<td id="firma,{i + 1}">{row.firma}</td>
-			<td>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td>
-			<td id="gorusmeKanali,{i + 1}">{row.gorusme_kanali}</td>
-			<td id="durum,{i + 1}">{row.durum}</td>
-			<td id="yetkili,{i + 1}">{row.yetkili}</td>
-			<td id="yetkiliTelefon,{i + 1}">{formatPhoneNumber(row.yetkili_telefon)}</td>
-			<td id="yetkiliEmail,{i + 1}">{row.yetkili_email}</td>
-			<td id="verilenTeklif,{i + 1}">{row.verilen_teklif}</td>
+		<tr class="gorusmeRow leading-[3rem] whitespace-nowrap  bg-[#ffffff]">
+			<td class="rounded-l-md font-light text-sm text-[#9598B7]">{i + 1}</td>
+			<td id="firma,{i + 1}" class="font-extrabold text-lg text-[#383B74]">{row.firma}</td>
+			<td class="font-light text-sm text-[#9598B7]"
+				>{`${row.tarih.getDate()} / ${row.tarih.getMonth() + 1} / ${row.tarih.getFullYear()}`}</td
+			>
+			<td class="font-light text-sm text-[#9598B7]" id="gorusmeKanali,{i + 1}"
+				>{row.gorusme_kanali}</td
+			>
+			{#if row.durum == 'Olumlu Sonuçlandı'}
+				<td class="font-light text-sm text-green-400" id="durum,{i + 1}">{row.durum}</td>
+			{:else if row.durum == 'Olumsuz Sonuçlandı'}
+				<td class="font-light text-sm text-red-400" id="durum,{i + 1}">{row.durum}</td>
+			{:else}
+				<td class="font-light text-sm text-yellow-400" id="durum,{i + 1}">{row.durum}</td>
+			{/if}
+			<td class="font-light text-sm text-[#9598B7]" id="yetkili,{i + 1}">{row.yetkili}</td>
+			<td class="font-light text-sm text-[#9598B7]" id="yetkiliTelefon,{i + 1}"
+				>{formatPhoneNumber(row.yetkili_telefon)}</td
+			>
+			<td class="font-light text-sm text-[#9598B7]" id="yetkiliEmail,{i + 1}"
+				>{row.yetkili_email}</td
+			>
+			<td class="font-light text-sm text-[#9598B7]" id="verilenTeklif,{i + 1}"
+				>{row.verilen_teklif}</td
+			>
 			{#if `${row.icerik}`.slice(-9) != 'undefined'}
 				<!-- Actual Image -->
 				<img class="hidden" id="dosya" src={row.icerik} alt="içerik yok" />
@@ -132,9 +119,11 @@
 			{:else}
 				<td />
 			{/if}
-			<td id="aciklamalar,{i + 1}">{row.aciklamalar}</td>
+			<td id="aciklamalar,{i + 1}" class="rounded-r-md">{row.aciklamalar}</td>
 			<td class="hidden id">{row.id}</td>
 		</tr>
+
+		<tr class="spacer leading-3">&nbsp</tr>
 	{/each}
 </table>
 

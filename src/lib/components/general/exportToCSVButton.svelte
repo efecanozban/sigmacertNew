@@ -4,6 +4,8 @@
 	export let data;
 	export let dataType;
 
+	console.log(data);
+
 	function ExportToCSV() {
 		switch (dataType) {
 			case 'TableData':
@@ -17,6 +19,7 @@
 	}
 </script>
 
-<button class="neomorphic-sm pl-4 pr-4 font-bold text-white text-center" on:click={ExportToCSV}
-	>Tabloyu CSV formatında indir</button
+<button
+	class="h-[4vh] w-[8vw] ml-[1vw] font-bold rounded-md bg-white text-gray-400 text-lg text-center"
+	on:click={ExportToCSV}>CSV İndir</button
 >

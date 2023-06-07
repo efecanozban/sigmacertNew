@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import TableFilter from '$lib/components/general/tableFilter.svelte';
 	import ExportToCsvButton from '$lib/components/general/exportToCSVButton.svelte';
-	import { bubble } from 'svelte/internal';
+	import { bubble, space } from 'svelte/internal';
 
 	const tableHeadings = [
 		'S. No',
@@ -61,7 +61,7 @@
 			.forEach((row) => {
 				let new_tr = document.createElement('tr');
 				new_tr.className =
-					'appointmentTableRow leading-7 whitespace-nowrap rounded-xl neomorphic-sm-inset hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] ';
+					'appointmentTableRow leading-[3rem] whitespace-nowrap  bg-[#ffffff] hover:bg-black hover:bg-opacity-20 hover:leading-[4rem] ';
 
 				Object.entries(row).forEach((cell) => {
 					let new_td = document.createElement('td');
@@ -110,6 +110,12 @@
 					}
 				});
 				appointmentsTable.appendChild(new_tr);
+
+				let spacer = document.createElement('tr');
+				spacer.innerHTML = '&nbsp';
+				spacer.className = 'spacer';
+				spacer.classList.add('leading-3');
+				appointmentsTable.appendChild(spacer);
 			});
 	}
 
@@ -186,7 +192,7 @@
 />
 
 <!-- Table Filter -->
-<div class="flex w-[79vw] m-auto mt-[4vh] mb-[2vh] justify-between ">
+<div class="flex justify-end w-[79vw] m-auto mt-[4vh] mb-[4vh] ">
 	<ExportToCsvButton data={appointmentTableRows} dataType="TableData" />
 	<TableFilter filterTable={appointmentsTable} />
 </div>
@@ -194,10 +200,12 @@
 <!-- Appointments Table -->
 <table id="appointmentsTable" class="w-[80vw] h-[60vh] m-auto rounded-xl block overflow-scroll">
 	<thead>
-		<tr id="appointmentsTableHeaderRow" class="neomorphic-sm-inset rounded-xl">
+		<tr id="appointmentsTableHeaderRow">
 			{#each tableHeadings as heading, i}
-				<th id="appointmentsTableHeading,{i}" on:click={SortTable} class="font-normal pr-16 pb-2"
-					>{heading}</th
+				<th
+					id="appointmentsTableHeading,{i}"
+					on:click={SortTable}
+					class="pr-16 whitespace-nowrap pb-4 text-[#383B74] text-bold text-md">{heading}</th
 				>
 			{/each}
 		</tr>

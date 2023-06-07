@@ -54,7 +54,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="hidden backdrop" id="updateGorusmeMoodle" on:click|self={closeUpdateGoursmeMoodle}>
 	<form
-		class="relative w-[30vw] h-[60vh] top-[40vh] bg-gray-300 rounded-xl text-center translate-y-[-50%] m-auto"
+		class="relative w-[30vw] h-[60vh] top-[40vh] bg-[#F5F7FB] rounded-xl text-center translate-y-[-50%] m-auto"
 		id="updateUserForm"
 		action="/personelPanel?/updateGorusme"
 		method="POST"

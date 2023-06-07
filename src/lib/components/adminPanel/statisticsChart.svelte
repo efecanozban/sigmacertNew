@@ -4,22 +4,24 @@
 </script>
 
 <div class="personelStatistics border-l-2 pl-2 border-dashed border-gray-400 grid">
-	<p id="title" class="font-bold col-span-2 text-center">{data[selectedPersonel]._personel}</p>
+	<p id="title" class="text-[#383B74] font-bold col-span-2 text-center text-lg">
+		{data[selectedPersonel]._personel}
+	</p>
 
-	<p>Toplam Görüşme Sayısı</p>
-	<p class="font-bold">{data[selectedPersonel]._total_gorusme_count}</p>
+	<p class="text-[#383B74]">Toplam Görüşme Sayısı</p>
+	<p class="font-bold text-[#383B74]">{data[selectedPersonel]._total_gorusme_count}</p>
 
-	<p>Olumlu Sonuçlanan Görüşme Sayısı</p>
-	<p class="font-bold">{data[selectedPersonel]._gorusme_counts[0]}</p>
+	<p class="text-green-400">Olumlu Sonuçlanan Görüşme Sayısı</p>
+	<p class="font-bold text-green-400">{data[selectedPersonel]._gorusme_counts[0]}</p>
 
-	<p>Olumsuz Sonuçlanan Görüşme Sayısı</p>
-	<p class="font-bold">{data[selectedPersonel]._gorusme_counts[1]}</p>
+	<p class="text-red-400">Olumsuz Sonuçlanan Görüşme Sayısı</p>
+	<p class="font-bold text-red-400">{data[selectedPersonel]._gorusme_counts[1]}</p>
 
-	<p>Beklemede Olan Görüşme Sayısı</p>
-	<p class="font-bold">{data[selectedPersonel]._gorusme_counts[2]}</p>
+	<p class="text-yellow-400">Beklemede Olan Görüşme Sayısı</p>
+	<p class="font-bold text-yellow-400">{data[selectedPersonel]._gorusme_counts[2]}</p>
 
-	<p>Tekrarlanması Gereken Görüşme Sayısı</p>
-	<p class="font-bold">{data[selectedPersonel]._gorusme_counts[3]}</p>
+	<p class="text-yellow-400">Tekrarlanması Gereken Görüşme Sayısı</p>
+	<p class="font-bold  text-yellow-400">{data[selectedPersonel]._gorusme_counts[3]}</p>
 </div>
 
 <style>

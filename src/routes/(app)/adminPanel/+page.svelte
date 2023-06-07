@@ -14,7 +14,7 @@
 <NewUserMoodle bind:selectedPersonelId />
 
 <div
-	class="grid w-[80vw] h-[40vh] m-auto grid-cols-[330px_4fr_360px] gap-[1vw] neomorphic-sm rounded-xl pt-2"
+	class="grid w-[80vw] h-[40vh] m-auto grid-cols-[330px_4fr_360px] gap-[1vw] neomorphic-sm rounded-xl pt-2 bg-white"
 >
 	<StatisticsTable
 		data={data.statistics}

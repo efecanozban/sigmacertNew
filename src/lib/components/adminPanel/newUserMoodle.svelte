@@ -10,7 +10,7 @@
 			if (e.srcElement.id != 'deleteUserButton') {
 				deleteUserWarned = false;
 				deleteUserButton.innerHTML = 'Kullanıcı Sil';
-				deleteUserButton.style.backgroundColor = 'rgb(209,213,219)';
+				deleteUserButton.style.backgroundColor = 'rgb(255,255,255)';
 			}
 		});
 	});
@@ -46,7 +46,7 @@
 	};
 </script>
 
-<div class="w-full flex justify-end">
+<div class="w-[80vw] flex justify-end relative left-[10vw] mt-[4vh] mb-[4vh]">
 	<!-- Delete User Form -->
 	<form id="deleteUserForm" action="/adminPanel?/deleteUser" method="POST">
 		<input class="hidden" type="text" name="selectedPersonel" bind:value={selectedPersonelId} />
@@ -55,14 +55,14 @@
 	<!-- Delete User Button -->
 	<button
 		on:click={WarnDeleteUser}
-		class="neomorphic-sm w-[15vw] m-[4vh_3vw_4vh_-1vw] rounded-xl text-white text-lg font-bold"
+		class="h-[4vh] w-[8vw] font-bold ml-[1vw] bg-white rounded-md text-[#9598B7] text-lg rounded-md"
 		id="deleteUserButton">Kullanıcı Sil</button
 	>
 
 	<button
 		id="newUserButton"
-		class="neomorphic-sm w-[15vw] m-[4vh_3vw_4vh_-1vw] rounded-xl text-white text-lg font-bold"
-		on:click={toggleNewUserMoodle}>Yeni Kullanıcı Oluştur</button
+		class="h-[4vh] w-[8vw] font-bold ml-[1vw] bg-gradient-to-r from-blue-600 to-blue-800 text-white text-lg rounded-md"
+		on:click={toggleNewUserMoodle}>Yeni Kullanıcı</button
 	>
 </div>
 
